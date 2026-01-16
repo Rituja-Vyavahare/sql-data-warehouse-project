@@ -1,0 +1,55 @@
+-------------------------------------loading silver.[erp_cust_az12]-------------------------
+INSERT INTO  silver.[erp_cust_az12]
+(
+	[cid],
+	[bdate] ,
+	[gen] 
+)
+SELECT
+CASE 
+	WHEN [cid] LIKE 'NAS%' THEN  SUBSTRING(cid, 4, LEN(cid))
+	ELSE cid
+END AS[cid],
+
+CASE 
+	WHEN  bdate > GETDATE() THEN NULL
+	ELSE bdate
+END AS [bdate],
+CASE 
+	WHEN UPPER(TRIM(gen)) IN ( 'M' , 'MALE') THEN 'Male' 
+	WHEN UPPER(TRIM(gen)) IN ( 'F','FEMALE') THEN 'Female'
+	ELSE 'n/a' 
+END  AS [gen]
+FROM [bronze].[erp_cust_az12]
+
+select * from silver.[erp_cust_az12]
+
+
+--------------------------------------loading silver.[erp_loc_a101] ---------------------------------
+INSERT INTO silver.[erp_loc_a101]
+(cid, 
+cntry
+)
+select 
+REPLACE(cid, '-' , '') AS cid,
+CASE WHEN TRIM(cntry) IN ('USA' , 'US' , 'United States') THEN 'United States'
+	WHEN TRIM(cntry) = 'DE' THEN 'Germany'
+	WHEN TRIM(cntry) IS NULL or TRIM(cntry) = '' THEN 'n/a'
+	ELSE TRIM(cntry)
+END AS
+cntry
+from [bronze].[erp_loc_a101]
+
+----------------------------loading silver.[erp_px_cat_g1v2]-------------------------
+INSERT INTO  silver.[erp_px_cat_g1v2]
+(id
+,cat
+,subcat
+,maintenance
+)
+select 
+id
+,cat
+,subcat
+,maintenance
+from [bronze].[erp_px_cat_g1v2]
