@@ -5,6 +5,7 @@ This project demonstrates a comprehensive data warehousing and analytics solutio
 
 ---
 ## 🏗️ Data Architecture
+![alt text](https://github.com/Rituja-Vyavahare/sql-data-warehouse-project/blob/main/Data_Architecture_Visuals/data_architecture.png)
 
 ---
 ## 📖 Project Overview
